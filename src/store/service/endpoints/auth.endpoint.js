@@ -8,6 +8,7 @@ const authEndpoint = ApiService.injectEndpoints({
         method: "POST",
         body: arg,
       }),
+      invalidatesTags: ["auth"],
     }),
     signUp: builder.mutation({
       query: (arg) => ({
@@ -15,7 +16,27 @@ const authEndpoint = ApiService.injectEndpoints({
         method: "POST",
         body: arg,
       }),
+      invalidatesTags: ["auth"],
+    }),
+
+    profile: builder.query({
+      query: () => "user-profile",
+      providesTags: ["auth"],
+
+      //Api service mr=header lo dl
+    }),
+    logout: builder.mutation({
+      query: () => ({
+        url: "user-logout",
+        method: "POST",
+      }),
+      invalidatesTags: ["auth"],
     }),
   }),
 });
-export const { useSignInMutation, useSignUpMutation } = authEndpoint;
+export const {
+  useSignInMutation,
+  useSignUpMutation,
+  useProfileQuery,
+  useLogoutMutation,
+} = authEndpoint;
